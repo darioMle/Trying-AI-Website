@@ -376,7 +376,7 @@ function sendMessage() {
     chatBox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
     input.value = "";
 
-    fetch("/chat", {
+    fetch("https://trying-ai-website.onrender.com", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({message: userText})
