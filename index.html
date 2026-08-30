@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dario's Tech Repair</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        /* NAVIGATION */
+        nav {
+            background: #1e1e2f;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(to right, #3a3a5c, #1e1e2f);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .hero button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
+            background: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* SERVICES */
+        .services {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            width: 280px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #1e1e2f;
+        }
+
+        /* WHY CHOOSE US */
+        .why {
+            background: #ffffff;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .why h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .why p {
+            max-width: 700px;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            background: #e9e9ef;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 32px;
+        }
+
+        .about p {
+            max-width: 700px;
+            margin: auto;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* CONTACT */
+        .contact {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 32px;
+        }
+
+        .contact p {
+            font-size: 18px;
+        }
+
+        /* CHAT OPEN BUTTON */
+        .chat-open-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #ffcc00;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        /* CHATBOT PANEL */
+        .chatbot-container {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 350px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: none; /* hidden by default */
+            z-index: 1001;
+        }
+
+        .chat-header {
+            background: #1e1e2f;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .chat-header span {
+            position: absolute;
+            right: 10px;
+            top: 5px;
+            cursor: pointer;
+        }
+
+        .chat-box {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #fafafa;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+
+        .chat-input button {
+            padding: 10px 20px;
+            background: #3a3a5c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #1e1e2f;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1024px) {
+            .services {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 90%;
+            }
+
+            .chatbot-container {
+                width: 300px;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .chatbot-container {
+                width: 100%;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
+            }
+
+            .chat-box {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">Dario's Tech Repair</div>
+    <ul>
+        <li onclick="scrollToSection('hero')">Home</li>
+        <li onclick="scrollToSection('services')">Services</li>
+        <li onclick="scrollToSection('about')">About</li>
+        <li onclick="scrollToSection('contact')">Contact</li>
+    </ul>
+</nav>
+
+<section class="hero" id="hero">
+    <h1>Fast, Friendly Tech Repairs</h1>
+    <p>Phones • Laptops • Data Recovery • Home Tech Support</p>
+    <button onclick="openChat()">Chat With Us</button>
+</section>
+
+<section class="services" id="services">
+    <div class="card">
+        <h3>Phone Repairs</h3>
+        <p>Screen replacements, battery fixes, charging issues and more.</p>
+    </div>
+
+    <div class="card">
+        <h3>Laptop Repairs</h3>
+        <p>Keyboard fixes, virus removal, SSD upgrades and performance boosts.</p>
+    </div>
+
+    <div class="card">
+        <h3>Data Recovery</h3>
+        <p>Recover deleted files, broken USBs, SD cards and failing drives.</p>
+    </div>
+
+    <div class="card">
+        <h3>Home Tech Support</h3>
+        <p>Wi‑Fi setup, smart TV installation and home network troubleshooting.</p>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <h2>About Us</h2>
+    <p>
+        Dario’s Tech Repair is a Scottish tech support service helping people across Edinburgh,
+        Glasgow, and Aberdeen. We specialise in repairs, upgrades, data recovery, and home tech setup.
+        Our mission is to make technology simple, stress‑free, and accessible for everyone.
+    </p>
+</section>
+
+<section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>Email: support@dariotechrepair.com</p>
+    <p>Phone: 0131 555 1234</p>
+    <p>Locations: Edinburgh • Glasgow • Aberdeen</p>
+</section>
+
+<!-- CHAT OPEN BUTTON -->
+<button class="chat-open-btn" onclick="openChat()">💬 Chat With Us</button>
+
+<!-- CHATBOT -->
+<div class="chatbot-container">
+    <div class="chat-header">
+        Dario's Chatbot
+        <span onclick="closeChat()">✖</span>
+    </div>
+
+    <div class="chat-box" id="chat-box"></div>
+
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<footer>
+    © 2026 Dario's Tech Repair — Edinburgh, Scotland
+</footer>
+
+<script>
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+function openChat() {
+    document.querySelector('.chatbot-container').style.display = 'block';
+    document.querySelector('.chat-open-btn').style.display = 'none';
+}
+
+function closeChat() {
+    document.querySelector('.chatbot-container').style.display = 'none';
+    document.querySelector('.chat-open-btn').style.display = 'block';
+}
+
+function sendMessage() {
+    const input = document.getElementById("user-input");
+    const chatBox = document.getElementById("chat-box");
+
+    const userText = input.value.trim();
+    if (!userText) return;
+
+    chatBox.innerHTML += `<p><strong>You:</strong> ${userText}</p>`;
+    input.value = "";
+
+    fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: userText})
+    })
+    .then(res => res.json())
+    .then(data => {
+        chatBox.innerHTML += `<p><strong>Bot:</strong> ${data.reply}</p>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    })
+    .catch(() => {
+        chatBox.innerHTML += `<p><strong>Bot:</strong> Error talking to bot.</p>`;
+    });
+}
+</script>
+
+</body>
+</html>
