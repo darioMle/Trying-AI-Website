@@ -24,4 +24,3 @@ def ask_openai(message):
 
     except Exception as e:
         return f"ERROR: {str(e)}"
-
