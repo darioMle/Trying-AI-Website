@@ -1,6 +1,14 @@
+import os
+import requests
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
 def ask_huggingface(message):
     API_URL = "https://api-inference.huggingface.co/models/google/gemma-2b-it"
     HF_KEY = os.environ.get("HF_KEY")
+
+    print("HF_KEY:", HF_KEY)  # DEBUG: shows if your key is actually loaded
 
     headers = {"Authorization": f"Bearer {HF_KEY}"}
 
@@ -13,8 +21,7 @@ def ask_huggingface(message):
         response = requests.post(API_URL, headers=headers, json=payload)
         data = response.json()
 
-        # Debug print
-        print("HF RESPONSE:", data)
+        print("HF RESPONSE:", data)  # DEBUG: shows EXACT response from HuggingFace
 
         # Case 1: dict with generated_text
         if isinstance(data, dict) and "generated_text" in data:
@@ -24,12 +31,21 @@ def ask_huggingface(message):
         if isinstance(data, list) and "generated_text" in data[0]:
             return data[0]["generated_text"]
 
-        # Case 3: error from HF
+        # Case 3: HF returned an error
         if "error" in data:
             return f"HF ERROR: {data['error']}"
 
-        return "Sorry, I couldn't get a response from the assistant."
+        return "HF ERROR: Unexpected response format"
 
     except Exception as e:
         return f"HF ERROR: {str(e)}"
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    user_message = request.json["message"]
+    bot_reply = ask_huggingface(user_message)
+    return jsonify({"reply": bot_reply})
+
+if __name__ == "__main__":
+    app.run()
 
