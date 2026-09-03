@@ -1,51 +1,41 @@
 import os
-import requests
 from flask import Flask, request, jsonify
+from openai import OpenAI
 
 app = Flask(__name__)
 
-def ask_huggingface(message):
-    API_URL = "https://api-inference.huggingface.co/models/google/gemma-2b-it"
-    HF_KEY = os.environ.get("HF_KEY")
+# Create OpenAI client using your Render environment variable
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
-    print("HF_KEY:", HF_KEY)  # DEBUG: shows if your key is actually loaded
-
-    headers = {"Authorization": f"Bearer {HF_KEY}"}
-
-    payload = {
-        "inputs": f"User: {message}\nAssistant:",
-        "parameters": {"max_new_tokens": 200}
-    }
-
+def ask_openai(message):
     try:
-        response = requests.post(API_URL, headers=headers, json=payload)
-        data = response.json()
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a friendly tech repair assistant for Dario's Tech Repair. "
+                        "Answer questions using the shop's information, repair services, prices, "
+                        "and policies. Keep answers short, helpful, and clear."
+                    )
+                },
+                {"role": "user", "content": message}
+            ]
+        )
 
-        print("HF RESPONSE:", data)  # DEBUG: shows EXACT response from HuggingFace
-
-        # Case 1: dict with generated_text
-        if isinstance(data, dict) and "generated_text" in data:
-            return data["generated_text"]
-
-        # Case 2: list with generated_text
-        if isinstance(data, list) and "generated_text" in data[0]:
-            return data[0]["generated_text"]
-
-        # Case 3: HF returned an error
-        if "error" in data:
-            return f"HF ERROR: {data['error']}"
-
-        return "HF ERROR: Unexpected response format"
+        return response.choices[0].message.content
 
     except Exception as e:
-        return f"HF ERROR: {str(e)}"
+        return f"ERROR: {str(e)}"
 
 @app.route("/chat", methods=["POST"])
 def chat():
     user_message = request.json["message"]
-    bot_reply = ask_huggingface(user_message)
+    bot_reply = ask_openai(user_message)
     return jsonify({"reply": bot_reply})
 
 if __name__ == "__main__":
     app.run()
+
 
