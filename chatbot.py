@@ -5,9 +5,9 @@ client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 def ask_openai(message):
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
+        response = client.responses.create(
+            model="gpt-5.4-mini",
+            input=[
                 {
                     "role": "system",
                     "content": (
@@ -16,11 +16,14 @@ def ask_openai(message):
                         "and policies. Keep answers short, helpful, and clear."
                     )
                 },
-                {"role": "user", "content": message}
+                {
+                    "role": "user",
+                    "content": message
+                }
             ]
         )
 
-        return response.choices[0].message.content
+        return response.output_text
 
     except Exception as e:
         return f"ERROR: {str(e)}"
