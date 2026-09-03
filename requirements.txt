@@ -1,3 +1,2 @@
-Flask
-requests
-flask-cors
+flask
+openai>=1.0.0
