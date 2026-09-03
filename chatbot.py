@@ -1,8 +1,11 @@
 import os
 from flask import Flask, request, jsonify
 from openai import OpenAI
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 
 # Create OpenAI client using your Render environment variable
 client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
