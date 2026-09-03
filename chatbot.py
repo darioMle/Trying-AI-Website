@@ -1,13 +1,6 @@
 import os
-from flask import Flask, request, jsonify
 from openai import OpenAI
-from flask_cors import CORS
 
-app = Flask(__name__)
-CORS(app)
-
-
-# Create OpenAI client using your Render environment variable
 client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 def ask_openai(message):
@@ -31,14 +24,4 @@ def ask_openai(message):
 
     except Exception as e:
         return f"ERROR: {str(e)}"
-
-@app.route("/chat", methods=["POST"])
-def chat():
-    user_message = request.json["message"]
-    bot_reply = ask_openai(user_message)
-    return jsonify({"reply": bot_reply})
-
-if __name__ == "__main__":
-    app.run()
-
 
