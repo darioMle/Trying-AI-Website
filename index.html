@@ -377,11 +377,10 @@ function sendMessage() {
     input.value = "";
 
     fetch("https://trying-ai-website.onrender.com/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: userMessage })
-})
-
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userText })
+    })
     .then(res => res.json())
     .then(data => {
         chatBox.innerHTML += `<p><strong>Bot:</strong> ${data.reply}</p>`;
