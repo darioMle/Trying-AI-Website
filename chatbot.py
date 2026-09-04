@@ -32,8 +32,17 @@ def ask_groq(message):
 
         data = response.json()
 
-        # NEW correct Groq response format
+        # If Groq returned an error, show it safely
+        if "error" in data:
+            return f"ERROR: {data['error'].get('message', 'Unknown error')}"
+
+        # If choices is missing, return a readable message
+        if "choices" not in data:
+            return "ERROR: Groq returned no choices."
+
+        # Normal successful response
         return data["choices"][0]["message"]["content"]
 
     except Exception as e:
         return f"ERROR: {str(e)}"
+
