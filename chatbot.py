@@ -12,7 +12,7 @@ def ask_groq(message):
                 "Content-Type": "application/json"
             },
             json={
-                "model": "llama3-8b-8192-inst",
+                "model": "llama3-8b-8192",
                 "messages": [
                     {
                         "role": "system",
@@ -45,7 +45,3 @@ def ask_groq(message):
 
     except Exception as e:
         return f"ERROR: {str(e)}"
-
-    except Exception as e:
-        return f"ERROR: {str(e)}"
-
