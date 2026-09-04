@@ -1,18 +1,18 @@
 import os
 import requests
 
-GROQ_API_KEY = os.environ["GROQ_API_KEY"]
+DEEPINFRA_API_KEY = os.environ["DEEPINFRA_API_KEY"]
 
-def ask_groq(message):
+def ask_deepinfra(message):
     try:
         response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
+            "https://api.deepinfra.com/v1/openai/chat/completions",
             headers={
-                "Authorization": f"Bearer {GROQ_API_KEY}",
+                "Authorization": f"Bearer {DEEPINFRA_API_KEY}",
                 "Content-Type": "application/json"
             },
             json={
-                "model": "llama3-groq-8b-8192",
+                "model": "meta-llama/Meta-Llama-3-8B-Instruct",
                 "messages": [
                     {
                         "role": "system",
@@ -32,13 +32,13 @@ def ask_groq(message):
 
         data = response.json()
 
+        # Handle errors safely
         if "error" in data:
             return f"ERROR: {data['error'].get('message', 'Unknown error')}"
 
-        if "choices" not in data:
-            return "ERROR: Groq returned no choices."
-
+        # DeepInfra uses the same structure as OpenAI
         return data["choices"][0]["message"]["content"]
 
     except Exception as e:
         return f"ERROR: {str(e)}"
+
