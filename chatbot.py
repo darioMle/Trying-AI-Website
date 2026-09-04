@@ -1,14 +1,14 @@
 import os
 import requests
 
-DEEPINFRA_API_KEY = os.environ["DEEPINFRA_API_KEY"]
+TOGETHER_API_KEY = os.environ["TOGETHER_API_KEY"]
 
-def ask_deepinfra(message):
+def ask_together(message):
     try:
         response = requests.post(
-            "https://api.deepinfra.com/v1/openai/chat/completions",
+            "https://api.together.ai/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {DEEPINFRA_API_KEY}",
+                "Authorization": f"Bearer {TOGETHER_API_KEY}",
                 "Content-Type": "application/json"
             },
             json={
@@ -32,13 +32,12 @@ def ask_deepinfra(message):
 
         data = response.json()
 
-        # Handle errors safely
         if "error" in data:
             return f"ERROR: {data['error'].get('message', 'Unknown error')}"
 
-        # DeepInfra uses the same structure as OpenAI
         return data["choices"][0]["message"]["content"]
 
     except Exception as e:
         return f"ERROR: {str(e)}"
+
 
