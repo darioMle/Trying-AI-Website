@@ -31,12 +31,9 @@ def ask_groq(message):
         )
 
         data = response.json()
+
+        # NEW correct Groq response format
         return data["choices"][0]["message"]["content"]
 
     except Exception as e:
         return f"ERROR: {str(e)}"
-
-
-    except Exception as e:
-        return f"ERROR: {str(e)}"
-
