@@ -12,7 +12,7 @@ def ask_groq(message):
                 "Content-Type": "application/json"
             },
             json={
-                "model": "mixtral-8x7b-32768",
+                "model": "llama3-groq-8b-8192",
                 "messages": [
                     {
                         "role": "system",
@@ -32,15 +32,12 @@ def ask_groq(message):
 
         data = response.json()
 
-        # If Groq returned an error, show it safely
         if "error" in data:
             return f"ERROR: {data['error'].get('message', 'Unknown error')}"
 
-        # If choices is missing, return a readable message
         if "choices" not in data:
             return "ERROR: Groq returned no choices."
 
-        # Normal successful response
         return data["choices"][0]["message"]["content"]
 
     except Exception as e:
