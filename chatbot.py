@@ -1,14 +1,14 @@
 import os
 import requests
 
-TOGETHER_API_KEY = os.environ["TOGETHER_API_KEY"]
+DEEPINFRA_API_KEY = os.environ["DEEPINFRA_API_KEY"]
 
-def ask_together(message):
+def ask_deepinfra(message):
     try:
         response = requests.post(
-            "https://api.together.ai/v1/chat/completions",
+            "https://api.deepinfra.com/v1/openai/chat/completions",
             headers={
-                "Authorization": f"Bearer {TOGETHER_API_KEY}",
+                "Authorization": f"Bearer {DEEPINFRA_API_KEY}",
                 "Content-Type": "application/json"
             },
             json={
@@ -17,12 +17,8 @@ def ask_together(message):
                     {
                         "role": "system",
                         "content": (
-                            "You are the official support assistant for Dario's Tech Repair. "
-                            "Use ONLY the real business info: "
-                            "Phone repairs, laptop repairs, data recovery, home tech support. "
-                            "Locations: Edinburgh, Glasgow, Aberdeen. "
-                            "Contact: support@dariotechrepair.com / 0131 555 1234. "
-                            "Friendly Scottish tone. No made‑up prices."
+                            "You are a helpful assistant for Dario's school/tech projects. "
+                            "Answer clearly, accurately, and avoid making up facts."
                         )
                     },
                     {"role": "user", "content": message}
