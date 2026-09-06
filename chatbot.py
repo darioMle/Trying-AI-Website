@@ -1,14 +1,14 @@
 import os
 import requests
 
-DEEPINFRA_API_KEY = os.environ["DEEPINFRA_API_KEY"]
+OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]
 
-def ask_deepinfra(message):
+def ask_openrouter(message):
     try:
         response = requests.post(
-            "https://api.deepinfra.com/v1/openai/chat/completions",
+            "https://openrouter.ai/api/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {DEEPINFRA_API_KEY}",
+                "Authorization": f"Bearer {OPENROUTER_API_KEY}",
                 "Content-Type": "application/json"
             },
             json={
@@ -17,8 +17,8 @@ def ask_deepinfra(message):
                     {
                         "role": "system",
                         "content": (
-                            "You are a helpful assistant for Dario's school/tech projects. "
-                            "Answer clearly, accurately, and avoid making up facts."
+                            "You are a helpful assistant for Dario's school and tech projects. "
+                            "Answer clearly and avoid making up facts."
                         )
                     },
                     {"role": "user", "content": message}
@@ -35,5 +35,3 @@ def ask_deepinfra(message):
 
     except Exception as e:
         return f"ERROR: {str(e)}"
-
-
