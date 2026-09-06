@@ -15,15 +15,10 @@ def ask_openrouter(message):
                 "Content-Type": "application/json"
             },
             json={
-                "model": "llama-3b-instruct",
+                # Use a generic alias so OpenRouter selects a valid model for you
+                "model": "openrouter/llama-3-instruct",
                 "messages": [
-                    {
-                        "role": "system",
-                        "content": (
-                            "You are a helpful assistant for Dario's Tech Repair. "
-                            "Answer clearly and avoid making up facts."
-                        )
-                    },
+                    {"role": "system", "content": "You are a helpful assistant for Dario's Tech Repair."},
                     {"role": "user", "content": message}
                 ],
                 "max_tokens": 512,
@@ -35,11 +30,9 @@ def ask_openrouter(message):
         data = resp.json()
 
         if resp.status_code != 200:
-            # Try to return a readable error message from the API
             err = data.get("error") or data.get("message") or resp.text
             return f"ERROR: {err}"
 
-        # Normal OpenAI-style response structure
         if "choices" in data and len(data["choices"]) > 0:
             return data["choices"][0]["message"]["content"]
 
